@@ -1,0 +1,344 @@
+@import 'public';
+body{
+    height:6000px;
+    
+}
+.clear-box{
+   height:145px;
+}
+.suck-the-top{
+    width:100%;
+    position: fixed;
+    top:0;
+    
+}
+
+
+.hide-Top{
+    width:100%;  
+    
+    
+}
+.hide-Top a{
+    display: block;
+    width:100%;  
+    height:37px;
+    line-height:37px;
+    text-align:center; 
+    background:#ee2c72;  
+    font-size:13px;
+    color:#ffffff;
+
+}
+.round{
+    width:26px;
+    height:26px;
+    border-radius:13px;
+    position: absolute;
+    right:21px;top:5px;
+    cursor:pointer;
+    border:1px solid #fff;
+    background:#ee2c72  url(../img/integration.png) no-repeat -353px -473px;
+}
+
+/* ------------------导航-------------------- */
+.top-Nav{
+    width:100%;
+    height:101px;
+    background: url(../img/headerbg.jpg) no-repeat center top;
+    position: relative;
+    
+}
+.logo{
+    width:265px;
+    height:61px;
+    position: absolute;
+    left:173px;top:17px;
+}
+
+.search{
+    width:290px;
+    height:33px;
+    border:2px solid #521b76; 
+    
+    margin-left:501px;
+    margin-top:25px;
+    
+    border-radius: 4px;
+    text-indent:12px;
+}
+.search-style{
+    width:290px;
+    height:25px;
+    line-height: 25px;
+    background:#fff;
+    text-indent:12px;
+    color:#521b76; 
+    font-size: 12px;
+    border:2px solid #521b76; 
+    border-top:none;
+    font-family:arial;
+    font-weight: bold;
+}
+.BaiDu-Box{
+    float:left;
+    
+    position: absolute;
+    left:501px;top:62px;
+    
+}
+
+
+   /*placeholder字体颜色兼容*/
+.search::-webkit-input-placeholder{
+    color:#521b76;
+}
+.search::-moz-placeholder{
+    color:#521b76;
+}
+.search:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color:#521b76;
+  }
+.wrap-search-font{
+    display:block;
+    width:36px;
+    height:32px; 
+    background: #fff;
+    position: absolute;
+    left:755px;top:28px;
+      
+    .search-font{
+        font-size: 18px;
+        padding-left:10px;
+        line-height: 33px;
+   }
+}
+.wrap-search-font:hover .search-font{
+    opacity: 0.8;
+}
+.top-list{
+    margin-right:66px;
+}
+.top-list li{
+    float: left;
+    padding:0 12px 0 15px;
+    margin-top:15px;
+    border-right:2px solid #c53796;
+    a{
+        color:#b53788;
+        font-size:11px;
+        font-weight:bold;
+    }
+}
+
+.top-list .border-right-none{
+    border-right:none;
+}
+
+.top-list-two{
+    position: absolute;
+    right:76px;top:51px;
+    
+   
+    li{
+        float:left;
+        margin-right:23px;
+        a{
+            font-size:12px;
+            color:#b53788;
+            font-weight:bold;
+            display: block;
+            height:33px;
+            line-height:33px;
+            span{
+                display: block;
+                width:33px;
+                height:33px;
+                background-color: #fff;
+                float:left;
+                margin-right:6px;
+               
+            }
+            .top-list-two-logo1{
+                background:url(../img/integration.png) no-repeat -277px -315px;
+            }
+            .top-list-two-logo2{
+                background:url(../img/integration.png) no-repeat -313px -315px;
+            }
+            .top-list-two-logo3{
+                background:url(../img/integration.png) no-repeat -349px -315px;
+            }
+        }
+    }
+}
+.top-list-two li:hover a{
+    color:#662d90;
+}
+
+/*-------------------导航------------*/ 
+
+.nav{
+    
+    width:100%;
+    height:44px;
+    background:#a0307c;
+    overflow: hidden;
+
+   span{
+     
+        display: block;
+        width:180px;
+        height:40px;
+        margin:4px 2px 0 84px;
+        border-top-left-radius:4px;
+        border-top-right-radius:4px;
+        background:#9f307c;
+        float:left;
+    .Level-1-list{
+        height:40px;
+        line-height:40px; 
+        text-indent:4px;
+        font-size:16px;
+        color:#fff;
+        font-weight: bold;
+        
+        i{
+            display: block;
+            width:15px;
+            height:13px; 
+            float:left;
+            background:url(../img/integration.png) no-repeat -262px -185px;
+            margin-left:32px;
+            margin-top:15px;
+        }
+      }
+    }
+
+}
+.nav span:hover {
+    background:#fff;
+    .Level-1-list{
+        color:#51216b;
+        text-decoration: underline;
+        i{
+            background:url(../img/integration.png) no-repeat -279px -185px;  
+        }
+    }
+}
+
+.nav ul li{
+    float:left;
+    margin-left:2px;
+    display: block;
+    width:102px;
+    height:40px; 
+    background:#9f307c;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    margin-top:4px;
+    a{   
+        
+        text-indent: 23px;
+        float:left;
+        line-height:40px;
+        color:#fff;
+        font-size:16px;
+        
+        
+    }
+}
+
+.nav ul li:hover{
+    background:#fff;
+    a{
+        color:#51216b;
+        text-decoration: underline;
+    }
+}
+.nav .gift-indent{
+   
+    
+    width:138px;
+    height:40px;
+      a{text-indent:7px;  font-weight:bolder;
+      .gift{
+             display: block;
+             width:16px;
+             height:16px; 
+             float:left;
+             background:url(../img/giftblue.jpg) no-repeat;
+             margin-left:30px;
+             margin-top:12px;
+            
+     }
+    }
+}
+.nav .gift-indent:hover{
+    background:#fff;
+    a{
+        color:#51216b;
+        text-decoration: underline;
+        .gift{
+            background:url(../img/gift.jpg) no-repeat;
+        }
+    }
+}
+/* -----------------------prodect----------------*/
+.nav .product-indent{
+   
+    
+    width:138px;
+    height:40px;
+    background:#a4307c;
+      a{text-indent:7px;
+        font-weight:bolder;
+      .product{
+             display: block;
+             width:17px;
+             height:16px; 
+             float:left;
+             background:url(../img/integration.png) no-repeat -295px -350px;
+             margin-left:30px;
+             margin-top:13px;
+            
+     }
+    }
+}
+
+.nav .product-indent:hover{
+    background:#fff;
+    a{
+        color:#51216b;
+        text-decoration: underline;
+        .product{
+            background:url(../img/integration.png) no-repeat -295px -367px;
+        }
+    }
+}
+
+
+/*--------------轮播图-------------*/
+.shuffling-Box{
+    width:100%;
+    height:435px;
+   background:red;
+}
+
+
+
+
+
+
+
+
+
+/*---------------- 返回页首------------------- */
+.back-to-top{  
+    position: fixed;  
+    bottom:30px;  
+    right: 30px;  
+    border:1px solid #888;  
+}
+
+
