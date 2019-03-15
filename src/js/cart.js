@@ -1,5 +1,3 @@
-import { Z_ASCII } from "zlib";
-
 
 var $backButton=$('.back-to-top'); 
 var $hideTop = $('.hide-Top');
@@ -46,44 +44,9 @@ $('.logo').on('click',function(){
 });
 
 
-/*---------jq轮播图start----------*/
 
-
-    var timer = setInterval(auto,5000);
-    var index = 0;
-    function auto(){
-        index++;
-        if( index == $("ol li").size() ){
-            index = 0;
-        }
-        $("ol li").eq(index).addClass("current").siblings().removeClass("current");
-        $(".shuffling-list li ").eq(index).fadeIn(1000).siblings().fadeOut(800);
-    }
-               
-    //鼠标 操作
-    $("ol li").mouseenter(function(){
-        clearInterval(timer);
-        index = $(this).index()-1;
-        
-        auto();
-    });
-    $("ol li").mouseout(function(){
-        timer = setInterval(auto,5000);
-    })
-    
-    /*--------jq轮播图end-------*/
-   
-   
-
-
-
-//     .select-menu:hover .CNY{
-//         display: block;
-//         z-index: 10;
-//    }
-   
-  /*------------CNY特效start-------------*/
-  $(function(){
+/*------------CNY特效start-------------*/
+$(function(){
     $(".CNY").hide();
     var _timeout;
     $('.select-menu').hover(function(){
@@ -244,149 +207,143 @@ $(function(){
     
 
 
-
-/*-------------- 倒计时 --------------*/
-
-       
-  
+ 
+ $(function(){
+     //获取cookie
+     let cookieStr = $.cookie('cart') ? $.cookie('cart') : "";
+     //判断购物车是否为空
+     if(!cookieStr){
+         $('.blank').css('display','block');
+     }else{
+         //转对象
+         let cookieObj = convertCookieStrToCookieObj(cookieStr);
+         //遍历对象
+         /*
+          *   {
+          * 		"sp1" : {
+          * 	        "name" : "...",
+          *   		"price" : "...",
+          * 			"src" : "...",
+          * 			"num" : "..."
+          *       },
+          * 		"sp2" : {
+          * 	        "name" : "...",
+          *   		"price" : "...",
+          * 			"src" : "...",
+          * 			"num" : "..."
+          *       },
+          * 		"sp3" : {
+          * 	        "name" : "...",
+          *   		"price" : "...",
+          * 			"src" : "...",
+          * 			"num" : "..."
+          *       }
+          * 	}
+          * 
+          */
+         for(let key in cookieObj){
+             //记录商品ID
+             let obj = cookieObj[key];
+             let str = `
+                 <ul class="goodInfo" data-good-id="${key}">
+                     <li class = 'shoplis1'><img src="${obj.src}" /></li>
+                     <li  class = 'shoplis2'>${obj.name}</li>
+                     <li  class = 'shoplis3'>￥${obj.price}</li>
+                     <li class="num">
+                         <a href="javascript:;" class="minus">-</a><input type="text" name="" id="" class = 'hu' value="${obj.num}" /><a href="javascript:;" class="plus">+</a>
+                     </li>
+                     <li class="total">${obj.num * obj.price}</li>
+                     <li class="total1"><a href="javascript:;" class="del">删除</a></li>
+                 </ul>
+             `;
+             $('.cartList').append(str);
+         }
+         //获取所有的减号
+         $minus = $('.goodInfo .minus');
+         //遍历加事件
+         $minus.each(function(){
+             $(this).click(function(){
+                 //获取当前操作的商品ID
+                 let id = $(this).parents('.goodInfo').attr('data-good-id');
+                 //修改cookie
+                 let cookieStr = $.cookie('cart') ? $.cookie('cart') : '';
+                 let cookieObj = convertCookieStrToCookieObj(cookieStr);
+                 cookieObj[id].num --;
+                 if(cookieObj[id].num > 0){
+                     //重新写入cookie
+                     $.cookie('cart',JSON.stringify(cookieObj),{expires : 7,path : '/'});
+                     //数量框
+                     $(this).next().val(cookieObj[id].num);
+                     //小计
+                     $(this).parent().next().html(cookieObj[id].num * cookieObj[id].price);
+                 }
+             })
+         })
+         //获取所有的加号
+         let $plus = $('.goodInfo .plus');
+         //遍历加事件
+         $.each($plus,function(){
+             $(this).click(function(){
+                 //获取当前操作的商品ID
+                 let id = $(this).parents('.goodInfo').attr('data-good-id');
+                 //修改cookie
+                 let cookieStr = $.cookie('cart') ? $.cookie('cart') : '';
+                 let cookieObj = convertCookieStrToCookieObj(cookieStr);
+                 cookieObj[id].num ++;
+                 //重新写入cookie
+                 $.cookie('cart',JSON.stringify(cookieObj),{expires : 7,path : '/'});
+                 //数量框
+                 $(this).prev().val(cookieObj[id].num);
+                 //小计
+                 $(this).parent().next().html(cookieObj[id].num * cookieObj[id].price);
+             })
+         })
+         //获取所有的数量框
+         let $numInput = $('.goodInfo .num input');
+         //遍历加事件
+         $numInput.each(function(){
+             $(this).blur(function(){
+                 //获取当前操作的商品ID
+                 let id = $(this).parents('.goodInfo').attr('data-good-id');
+                 //修改cookie
+                 let cookieStr = $.cookie('cart') ? $.cookie('cart') : '';
+                 let cookieObj = convertCookieStrToCookieObj(cookieStr);
+                 if(/^\d+$/.test($(this).val()) && $(this).val() > 0){
+                     cookieObj[id].num = $(this).val();
+                 }else{
+                     cookieObj[id].num = 1;
+                 }
+                 //重新写入cookie
+                 $.cookie('cart',JSON.stringify(cookieObj),{expires : 7,path : '/'});
+                 //数量框
+                 $(this).val(cookieObj[id].num);
+                 //小计
+                 $(this).parent().next().html(cookieObj[id].num * parseInt(cookieObj[id].price));
+                
+             })
+         })
+         //获取所有的删除按钮
+         let $del = $('.goodInfo .del');
+         //遍历加事件
+         $del.each(function(){
+             $(this).click(function(){
+                 let id = $(this).parents('.goodInfo').remove().attr('data-good-id');
+                 //修改cookie
+                 let cookieStr = $.cookie('cart') ? $.cookie('cart') : '';
+                 let cookieObj = convertCookieStrToCookieObj(cookieStr);
+                 delete cookieObj[id]; //删除当前对象中的某个属性
+                 //重新写入cookie
+                 $.cookie('cart',JSON.stringify(cookieObj),{expires : 7,path : '/'});
+             })
+         })
+     }
      
-    window.show_time=function (){ 
-        var time_start = new Date().getTime(); //设定当前时间
-        var time_end =  new Date("2019/03/16 00:00:00").getTime(); //设定目标时间
-        // 计算时间差 
-        var time_distance = time_end - time_start; 
-       
-        // 时
-        var int_hour = Math.floor(time_distance/3600000) 
-        time_distance -= int_hour * 3600000; 
-        // 分
-        var int_minute = Math.floor(time_distance/60000) 
-        time_distance -= int_minute * 60000; 
-        // 秒 
-        var int_second = Math.floor(time_distance/1000) 
-        // 时分秒为单数时、前面加零 
-       
-        if(int_hour < 10){ 
-            int_hour = "0" + int_hour; 
-        } 
-        if(int_minute < 10){ 
-            int_minute = "0" + int_minute; 
-        } 
-        if(int_second < 10){
-            int_second = "0" + int_second; 
-        } 
-        // 显示时间 
-      
-        $(".hour").html(int_hour); 
-        $(".min").html(int_minute); 
-        $(".seconds").html(int_second); 
-        // 设置定时器
-        setTimeout("show_time()",1000); 
-       
-    } 
-    show_time();
-    /*-------------- 倒计时end --------------*/
-
-    /*------------------购物车---------------*/
-    $(function(){
-        cartInit();
-    })
-    //1. 获取购物车按钮
-    $('#buy').click(function(){
-        location.href = 'cart.html';
-    })
-
-    //2. 获取所有的购买按钮
-    let $buy = $('.addToCart');
-    //遍历
-	$.each($buy,function(){
-	    $(this).click(function(event){
-	    	//名称，价格，数量，src,商品ID
-	    	let id = $(this).parent().prev().attr('data-good-id');
-	    	let name = $(this).parent().prev().children().first().html();
-            let price = $(this).parent().prev().children().find("s").html().replace("¥","");
-            
-            console.log(price);
-            let src = $(this).parent().prev().prev().children().children().attr('src');
-            console.log(src)
-	    	
-	    	//获取cookie
-	    	//如果有返回字符串，如果没有返回undefined 统一成字符串
-	    	let cookieStr = $.cookie('cart') ? $.cookie('cart') : '';
-	    	//cookie字符串转对象
-            let cookieObj = convertCookieStrToCookieObj(cookieStr);
-            //判断对象中是否存在我当前购买的商品
-					/*
-					 * {
-					 * 	 "sp1" : {
-					 * 		name : '。。。'，
-					 * 	    price : '....',
-					 * 		src : '....',
-					 *      num : '...'
-					 * 	},
-					 * "sp2" : {
-					 * 		name : '。。。'，
-					 * 	    price : '....',
-					 * 		src : '....',
-					 *      num : '...'
-					 * 	}
-					 * }
-					 * 
-					 */
-					if(id in cookieObj){
-						cookieObj[id].num ++;
-					}else{
-						cookieObj[id] = {
-							"name" : name,
-							"price" : price,
-							"src" : src,
-							"num" : 1
-						}
-					}
-					//加入cookie
-					$.cookie('cart',JSON.stringify(cookieObj),{expires : 7,path : '/'});
-					//复制出一个img对象
-					let $img =$(this).parent().prev().prev().children().children().clone().css({width : 50,height : 50});
-					
-					$img.fly({  
-			            start: {  
-			                left: event.pageX, //开始位置（必填）#fly元素会被设置成position: fixed  
-			                top: event.pageY //开始位置（必填）  
-			            },  
-			            end: {  
-			                left: $('#buy').offset().left, //结束位置（必填）  
-			                top: $('#buy').offset().top, //结束位置（必填）  
-			                width: 0, //结束时宽度  
-			                height: 0 //结束时高度  
-			            },  
-			            onEnd: function(){ //结束回调  
-			                // $img.remove(); //运动结束后删除
-			                let num = parseInt(/(\d+)/.exec($('.num').html())[1]);
-			               	$('.num').html(num + 1)
-			            }  
-			        });  
-				})
-			})
-			//初始化购物车的数量
-			function cartInit(){
-				//获取cookie
-				let cookieStr = $.cookie('cart') ? $.cookie('cart') : '';
-				//转对象
-				let cookieObj = convertCookieStrToCookieObj(cookieStr);
-				let sum = 0;
-				//遍历对象
-				for(let key in cookieObj){
-					sum += cookieObj[key].num;
-				}
-				$('.num').html(sum)
-			}
-			//将cookie字符串转为cookie对象
-			function convertCookieStrToCookieObj(str){
-				if(!str){
-					return {};
-				}
-				return JSON.parse(str);
-			}
-
-
-        
+     
+ })
+ //将cookie字符串转为cookie对象
+ function convertCookieStrToCookieObj(str){
+     if(!str){
+         return {};
+     }
+     return JSON.parse(str);
+ }

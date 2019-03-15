@@ -7026,8 +7026,109 @@ $(function(){
     show_time();
     /*-------------- 倒计时end --------------*/
 
+    /*------------------购物车---------------*/
+    $(function(){
+        cartInit();
+    })
+    //1. 获取购物车按钮
+    $('#buy').click(function(){
+        location.href = 'cart.html';
+    })
 
-   
+    //2. 获取所有的购买按钮
+    let $buy = $('.addToCart');
+    //遍历
+	$.each($buy,function(){
+	    $(this).click(function(event){
+	    	//名称，价格，数量，src,商品ID
+	    	let id = $(this).parent().prev().attr('data-good-id');
+	    	let name = $(this).parent().prev().children().first().html();
+            let price = $(this).parent().prev().children().find("s").html().replace("¥","");
+            
+            console.log(price);
+            let src = $(this).parent().prev().prev().children().children().attr('src');
+            console.log(src)
+	    	
+	    	//获取cookie
+	    	//如果有返回字符串，如果没有返回undefined 统一成字符串
+	    	let cookieStr = $.cookie('cart') ? $.cookie('cart') : '';
+	    	//cookie字符串转对象
+            let cookieObj = convertCookieStrToCookieObj(cookieStr);
+            //判断对象中是否存在我当前购买的商品
+					/*
+					 * {
+					 * 	 "sp1" : {
+					 * 		name : '。。。'，
+					 * 	    price : '....',
+					 * 		src : '....',
+					 *      num : '...'
+					 * 	},
+					 * "sp2" : {
+					 * 		name : '。。。'，
+					 * 	    price : '....',
+					 * 		src : '....',
+					 *      num : '...'
+					 * 	}
+					 * }
+					 * 
+					 */
+					if(id in cookieObj){
+						cookieObj[id].num ++;
+					}else{
+						cookieObj[id] = {
+							"name" : name,
+							"price" : price,
+							"src" : src,
+							"num" : 1
+						}
+					}
+					//加入cookie
+					$.cookie('cart',JSON.stringify(cookieObj),{expires : 7,path : '/'});
+					//复制出一个img对象
+					let $img =$(this).parent().prev().prev().children().children().clone().css({width : 50,height : 50});
+					
+					$img.fly({  
+			            start: {  
+			                left: event.pageX, //开始位置（必填）#fly元素会被设置成position: fixed  
+			                top: event.pageY //开始位置（必填）  
+			            },  
+			            end: {  
+			                left: $('#buy').offset().left, //结束位置（必填）  
+			                top: $('#buy').offset().top, //结束位置（必填）  
+			                width: 0, //结束时宽度  
+			                height: 0 //结束时高度  
+			            },  
+			            onEnd: function(){ //结束回调  
+			                // $img.remove(); //运动结束后删除
+			                let num = parseInt(/(\d+)/.exec($('.num').html())[1]);
+			               	$('.num').html(num + 1)
+			            }  
+			        });  
+				})
+			})
+			//初始化购物车的数量
+			function cartInit(){
+				//获取cookie
+				let cookieStr = $.cookie('cart') ? $.cookie('cart') : '';
+				//转对象
+				let cookieObj = convertCookieStrToCookieObj(cookieStr);
+				let sum = 0;
+				//遍历对象
+				for(let key in cookieObj){
+					sum += cookieObj[key].num;
+				}
+				$('.num').html(sum)
+			}
+			//将cookie字符串转为cookie对象
+			function convertCookieStrToCookieObj(str){
+				if(!str){
+					return {};
+				}
+				return JSON.parse(str);
+			}
+
+
+        
 
 /***/ }),
 /* 23 */

@@ -5,11 +5,11 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 //2.配置导出模块
 module.exports = {
 	//入口
-	entry : './src/js/index.js',
+	entry : './src/js/login.js',
 	//出口
 	output : {
 		path : path.resolve(__dirname,'dist'), //__dirname : 是nodejs中的方法，可以找到当前目录所在的绝对路径
-		filename : 'js/main.js'
+		filename : 'js/login.js'
 	},module: {
         rules: [
             {
@@ -32,8 +32,8 @@ module.exports = {
 
 	plugins : [
 		new HtmlWebpackPlugin({
-			template : "./src/html/index.html",
-			filename : "./html/index.html"
+			template : "./src/html/login.html",
+			filename : "./html/login.html"
 		})
 	]
 }

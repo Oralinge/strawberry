@@ -1,4 +1,71 @@
-import { Z_ASCII } from "zlib";
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
 
 
 var $backButton=$('.back-to-top'); 
@@ -46,44 +113,9 @@ $('.logo').on('click',function(){
 });
 
 
-/*---------jq轮播图start----------*/
 
-
-    var timer = setInterval(auto,5000);
-    var index = 0;
-    function auto(){
-        index++;
-        if( index == $("ol li").size() ){
-            index = 0;
-        }
-        $("ol li").eq(index).addClass("current").siblings().removeClass("current");
-        $(".shuffling-list li ").eq(index).fadeIn(1000).siblings().fadeOut(800);
-    }
-               
-    //鼠标 操作
-    $("ol li").mouseenter(function(){
-        clearInterval(timer);
-        index = $(this).index()-1;
-        
-        auto();
-    });
-    $("ol li").mouseout(function(){
-        timer = setInterval(auto,5000);
-    })
-    
-    /*--------jq轮播图end-------*/
-   
-   
-
-
-
-//     .select-menu:hover .CNY{
-//         display: block;
-//         z-index: 10;
-//    }
-   
-  /*------------CNY特效start-------------*/
-  $(function(){
+/*------------CNY特效start-------------*/
+$(function(){
     $(".CNY").hide();
     var _timeout;
     $('.select-menu').hover(function(){
@@ -241,152 +273,137 @@ $(function(){
     });
 
 /*----------- 品牌导航end --------------*/
+
+
+/*-------------------------------注册----------------------- */ 
+
+
+/*-------------------------------注册start----------------------- */ 
+
+	
+
     
+/*-------------------------------注册end----------------------- */ 
 
 
 
-/*-------------- 倒计时 --------------*/
+window.onload = function(){
+	//获取页面元素
+	var oRegister = document.getElementById("register");
+	var oGoLogin = document.getElementById("goLogin");
+	var oUserName = document.getElementById("username");
+	var oPass = document.getElementById("password");
+	var oConPass = document.getElementById("conPwd");
+	//给注册按钮加事件
+	oRegister.onclick = function(){
+		//获取用户名和密码
+		var usn = oUserName.value;
+		var pwd = oPass.value;
+		var con = oConPass.value; //确认密码
+		
+		//用户不能为空
+		// if(!usn){
+		// 	alert("用户名不能为空！");
+		// 	return;
+		// }
+		
+		// //检测密码是否相同
+		// //密码不能为空，密码规则
+		// if(pwd !== con){
+		// 	alert("两次输入的密码不相同，请重试!");
+		// 	return;
+		// }
+		
+		//检测一下用户是否已经存在
+		//假设："test1,123:test2,abc:test3,888"
+		/*转为对象
+		 * {
+		 * 	test1:123,
+		 *  test2:abc,
+		 *  test3:888
+		 * }
+		 */
+		
+		//获取cookie中的用户信息
+		var users = getCookie("registerUsers") ? getCookie("registerUsers") : "";
+		
+		//将字符串转为对象
+		users = convertStrToObj(users);
+		if(usn in users){ //判断usn属性是否在users对象中。
+			alert("用户名已经被注册");
+			return;
+		}else{
+			//注册成功，设置用户信息的cookie
+			//test1 123  test2 abc  test3 888
+			//"test1,123:test2,abc:test3,888"设置cookie的value值
+			//registerUsers 设置cookie的name(key)值
+			//将用户添加到已注册用户列表对象中
+			users[usn] = pwd;
+			//假设users[李涛] = 123
+			
+			
+			//将用户信息对象转化回字符串，以便于设置cookie
+			userStr = convertObjToStr(users);
+			//设置用户信息cookie
+			setCookie("registerUsers",userStr,7);
+			console.log(decodeURIComponent(document.cookie))
+			alert("注册成功！");
+			location = "login.html";
+		}
+	};
+	
+	//给增登录按钮添加点击事件
+	oGoLogin.onclick = function(){
+		//转到登录页面
+		location.href = "login.html";
+	};
+};
+//将字符串转为对象
+function convertStrToObj(str){
+	if(!str){
+		return {};
+	}
+	//假设不为空："test1,123:test2,abc:test3,888:李涛,123"
+	var users = str.split(":"); //将字符串转为数组 ["test1,123","test2,abc","test3,888"]
+	var obj = {};
+	/*
+	 * var obj = new Object();
+	 * obj["name"] = "zhangsan";
+	 * 
+	 */
+	//遍历数组
+	for(var i = 0; i < users.length; i ++){
+		//将字符串转为数组
+		var userData = users[i].split(",");
+		//["test1",123] ["test2","abc"] ["test3",888]
+		obj[userData[0]] = userData[1];
+		/*转为对象如下：
+		 * obj = {
+		 * 	test1 : 123,
+		 *  test2 : abc,
+		 *  test3 : 888
+		 * }
+		 */
+	}
+	return obj;
+}
 
-       
-  
-     
-    window.show_time=function (){ 
-        var time_start = new Date().getTime(); //设定当前时间
-        var time_end =  new Date("2019/03/16 00:00:00").getTime(); //设定目标时间
-        // 计算时间差 
-        var time_distance = time_end - time_start; 
-       
-        // 时
-        var int_hour = Math.floor(time_distance/3600000) 
-        time_distance -= int_hour * 3600000; 
-        // 分
-        var int_minute = Math.floor(time_distance/60000) 
-        time_distance -= int_minute * 60000; 
-        // 秒 
-        var int_second = Math.floor(time_distance/1000) 
-        // 时分秒为单数时、前面加零 
-       
-        if(int_hour < 10){ 
-            int_hour = "0" + int_hour; 
-        } 
-        if(int_minute < 10){ 
-            int_minute = "0" + int_minute; 
-        } 
-        if(int_second < 10){
-            int_second = "0" + int_second; 
-        } 
-        // 显示时间 
-      
-        $(".hour").html(int_hour); 
-        $(".min").html(int_minute); 
-        $(".seconds").html(int_second); 
-        // 设置定时器
-        setTimeout("show_time()",1000); 
-       
-    } 
-    show_time();
-    /*-------------- 倒计时end --------------*/
-
-    /*------------------购物车---------------*/
-    $(function(){
-        cartInit();
-    })
-    //1. 获取购物车按钮
-    $('#buy').click(function(){
-        location.href = 'cart.html';
-    })
-
-    //2. 获取所有的购买按钮
-    let $buy = $('.addToCart');
-    //遍历
-	$.each($buy,function(){
-	    $(this).click(function(event){
-	    	//名称，价格，数量，src,商品ID
-	    	let id = $(this).parent().prev().attr('data-good-id');
-	    	let name = $(this).parent().prev().children().first().html();
-            let price = $(this).parent().prev().children().find("s").html().replace("¥","");
-            
-            console.log(price);
-            let src = $(this).parent().prev().prev().children().children().attr('src');
-            console.log(src)
-	    	
-	    	//获取cookie
-	    	//如果有返回字符串，如果没有返回undefined 统一成字符串
-	    	let cookieStr = $.cookie('cart') ? $.cookie('cart') : '';
-	    	//cookie字符串转对象
-            let cookieObj = convertCookieStrToCookieObj(cookieStr);
-            //判断对象中是否存在我当前购买的商品
-					/*
-					 * {
-					 * 	 "sp1" : {
-					 * 		name : '。。。'，
-					 * 	    price : '....',
-					 * 		src : '....',
-					 *      num : '...'
-					 * 	},
-					 * "sp2" : {
-					 * 		name : '。。。'，
-					 * 	    price : '....',
-					 * 		src : '....',
-					 *      num : '...'
-					 * 	}
-					 * }
-					 * 
-					 */
-					if(id in cookieObj){
-						cookieObj[id].num ++;
-					}else{
-						cookieObj[id] = {
-							"name" : name,
-							"price" : price,
-							"src" : src,
-							"num" : 1
-						}
-					}
-					//加入cookie
-					$.cookie('cart',JSON.stringify(cookieObj),{expires : 7,path : '/'});
-					//复制出一个img对象
-					let $img =$(this).parent().prev().prev().children().children().clone().css({width : 50,height : 50});
-					
-					$img.fly({  
-			            start: {  
-			                left: event.pageX, //开始位置（必填）#fly元素会被设置成position: fixed  
-			                top: event.pageY //开始位置（必填）  
-			            },  
-			            end: {  
-			                left: $('#buy').offset().left, //结束位置（必填）  
-			                top: $('#buy').offset().top, //结束位置（必填）  
-			                width: 0, //结束时宽度  
-			                height: 0 //结束时高度  
-			            },  
-			            onEnd: function(){ //结束回调  
-			                // $img.remove(); //运动结束后删除
-			                let num = parseInt(/(\d+)/.exec($('.num').html())[1]);
-			               	$('.num').html(num + 1)
-			            }  
-			        });  
-				})
-			})
-			//初始化购物车的数量
-			function cartInit(){
-				//获取cookie
-				let cookieStr = $.cookie('cart') ? $.cookie('cart') : '';
-				//转对象
-				let cookieObj = convertCookieStrToCookieObj(cookieStr);
-				let sum = 0;
-				//遍历对象
-				for(let key in cookieObj){
-					sum += cookieObj[key].num;
-				}
-				$('.num').html(sum)
-			}
-			//将cookie字符串转为cookie对象
-			function convertCookieStrToCookieObj(str){
-				if(!str){
-					return {};
-				}
-				return JSON.parse(str);
-			}
+//将对象转为字符串
+function convertObjToStr(obj){
+	////假设不为空："test1,123:test2,abc:test3,888:李涛,123"
+	var str = "";
+	for(var usn in obj){
+		var pwd = obj[usn];
+		if(str){
+			//看是否是第一组用户名和密码，如果不是，先在前面添加一个：
+			str += ":";
+		}
+		str += usn + ',' + pwd;
+	}
+	return str;
+}
 
 
-        
+
+/***/ })
+/******/ ]);

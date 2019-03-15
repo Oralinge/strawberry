@@ -1,5 +1,7 @@
 @import 'public';
-
+body{
+    overflow-x:hidden
+}
 .clear-box{
    
    height:182px;
@@ -139,24 +141,12 @@
 .top-list .border-right-none{
     border-right:none;
 }
-.num{
-    width:15px;
-    height:14px;
-    line-height:14px;
-    background:#fe7202;
-    color:#fff;
-    font-size:13px;
-    border-radius:7px;
-    position: absolute;
-    left:1194px;top:48px;
-    text-align: center;
-    cursor: pointer;
-    
-}
+
 .top-list-two{
     position: absolute;
     right:76px;top:51px;
-
+    
+   
     li{
         float:left;
         margin-right:23px;
@@ -633,50 +623,36 @@
         }
     }
 }
+/*---------------------end---------------------------*/
 
 
-/*--------------轮播图-------------*/
-.shuffling-Box{
-    width:100%;
-    height:435px;
-   
-   overflow: hidden;
-   
-
-   .shuffling{
-       width:1138px;
-       height:308px;
-       border:15px solid #882388;
-       margin:37px auto 0;
-       overflow: hidden;
-       
-       ul li img{
-           z-index: 1;
-       }
-       
-    
-   }
-}
-ol{
-    margin-left:555px;
-    margin-top:18px;
-}
-
- ol li{
-       width:12px;
-       height:12px;
-       border-radius:12px;
-       float:left;
-       border:2px solid #65318f;
-       margin-right:16px;
-    } 
-
-ol li.current{
-    background-color:#662d90;
-}
-.shuffling-Box  ol li:hover{
-    background:#65318f;
-    cursor: pointer;
+.adv{
+    width:1300px;
+    height:184px;
+    background:#fff;
+    h3{
+        width:100%;
+        height:61px; 
+        a{
+            line-height:98px;
+            color:#000;
+        }
+        a:first-of-type{
+            margin-left:97px;
+        }
+        a:hover{
+           text-decoration:underline;
+        }
+        a:nth-of-type(4){
+            color:#ef1275;
+        }
+        i{
+           color:#cfdaed;
+        }
+    }
+    img{
+        margin-left:97px;
+    }
 }
 
 
@@ -3519,6 +3495,13 @@ border-image: linear-gradient( red, blue) 30 30;
     }
 }
 /*---------------------热卖榜end---------------------------*/ 
+
+
+
+
+
+
+
 
 /*---------------------底栏1start---------------------------*/ 
 .bottom-box1{
